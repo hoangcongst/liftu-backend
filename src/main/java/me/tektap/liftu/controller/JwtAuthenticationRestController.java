@@ -21,23 +21,24 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "${site.crossorigin}")
 public class JwtAuthenticationRestController {
 
 	@Value("${jwt.http.request.header}")
 	private String tokenHeader;
 
-	@Autowired
 	private AuthenticationManager authenticationManager;
-
-	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
-
-	@Autowired
 	private UserDetailsService jwtUserDetailsService;
-
-	@Autowired
 	private UserRepository mUserRepository;
+
+	public JwtAuthenticationRestController(AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil,
+										   UserDetailsService jwtUserDetailsService, UserRepository mUserRepository) {
+		this.authenticationManager = authenticationManager;
+		this.jwtTokenUtil = jwtTokenUtil;
+		this.jwtUserDetailsService = jwtUserDetailsService;
+		this.mUserRepository = mUserRepository;
+	}
 
 	@RequestMapping(value = "${jwt.get.token.uri}", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtTokenRequest authenticationRequest)

@@ -26,5 +26,4 @@ public class JwtUserDetailsService implements UserDetailsService {
 
 		return mUser;
 	}
-
 }
