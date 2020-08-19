@@ -3,7 +3,6 @@ package me.tektap.liftu.controller;
 import me.tektap.liftu.dao.UserRepository;
 import me.tektap.liftu.entity.User;
 import me.tektap.liftu.util.JwtTokenUtil;
-import me.tektap.liftu.entity.JwtUserDetails;
 import me.tektap.liftu.exception.AuthenticationException;
 import me.tektap.liftu.Request.JwtTokenRequest;
 import me.tektap.liftu.Response.JwtTokenResponse;
@@ -15,7 +14,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +34,7 @@ public class JwtAuthenticationRestController {
 	private JwtTokenUtil jwtTokenUtil;
 
 	@Autowired
-	private UserDetailsService jwtInMemoryUserDetailsService;
+	private UserDetailsService jwtUserDetailsService;
 
 	@Autowired
 	private UserRepository mUserRepository;
@@ -60,7 +58,7 @@ public class JwtAuthenticationRestController {
 		String authToken = request.getHeader(tokenHeader);
 		final String token = authToken.substring(7);
 		String username = jwtTokenUtil.getUsernameFromToken(token);
-		JwtUserDetails user = (JwtUserDetails) jwtInMemoryUserDetailsService.loadUserByUsername(username);
+		User user = (User) jwtUserDetailsService.loadUserByUsername(username);
 
 		if (jwtTokenUtil.canTokenBeRefreshed(token)) {
 			String refreshedToken = jwtTokenUtil.refreshToken(token);
@@ -78,6 +76,7 @@ public class JwtAuthenticationRestController {
 	private void authenticate(String username, String password) {
 		Objects.requireNonNull(username);
 		Objects.requireNonNull(password);
+		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));

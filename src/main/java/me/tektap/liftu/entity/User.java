@@ -12,6 +12,9 @@ import java.util.Date;
 @Table(name="users")
 @Data
 public class User implements UserDetails {
+    private static final int ACTIVE = 0;
+    private static final int BANNED = 1;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
@@ -36,21 +39,21 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return this.status == User.ACTIVE;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }

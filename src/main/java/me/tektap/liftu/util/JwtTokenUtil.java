@@ -5,7 +5,7 @@ import io.jsonwebtoken.Clock;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.DefaultClock;
-import me.tektap.liftu.entity.JwtUserDetails;
+import me.tektap.liftu.entity.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -90,7 +90,7 @@ public class JwtTokenUtil implements Serializable {
 	}
 
 	public Boolean validateToken(String token, UserDetails userDetails) {
-		JwtUserDetails user = (JwtUserDetails) userDetails;
+		User user = (User) userDetails;
 		final String username = getUsernameFromToken(token);
 		return (username.equals(user.getUsername()) && !isTokenExpired(token));
 	}
