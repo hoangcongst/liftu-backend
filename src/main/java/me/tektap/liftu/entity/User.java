@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="users")
@@ -31,6 +32,10 @@ public class User implements UserDetails {
     private Date created_at;
     @Column(name="updated_at")
     private Date updated_at;
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.REFRESH,
+            CascadeType.DETACH, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.PERSIST})
+    private List<Post> posts;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

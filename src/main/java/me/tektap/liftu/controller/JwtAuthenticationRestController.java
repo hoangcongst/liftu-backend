@@ -44,14 +44,18 @@ public class JwtAuthenticationRestController {
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtTokenRequest authenticationRequest)
 			throws AuthenticationException {
 
-		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+		try {
+			authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
-		final User userDetails = mUserRepository
-				.findUserByUsername(authenticationRequest.getUsername());
+			final User userDetails = mUserRepository
+					.findUserByUsername(authenticationRequest.getUsername());
 
-		final String token = jwtTokenUtil.generateToken(userDetails);
+			final String token = jwtTokenUtil.generateToken(userDetails);
 
-		return ResponseEntity.ok(new JwtTokenResponse(token));
+			return ResponseEntity.ok(new JwtTokenResponse(token));
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body("Login failed");
+		}
 	}
 
 	@RequestMapping(value = "${jwt.refresh.token.uri}", method = RequestMethod.GET)
