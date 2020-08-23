@@ -1,18 +1,14 @@
 package me.tektap.liftu.Response;
 
-import java.io.Serializable;
-
-public class JwtTokenResponse implements Serializable {
-
-	private static final long serialVersionUID = 8317676219297719109L;
-
+public class JwtTokenResponse extends BaseResponse {
 	private final String token;
 
-	public JwtTokenResponse(String token) {
+	public JwtTokenResponse(int status, String token) {
+		super(status);
 		this.token = token;
 	}
 
 	public String getToken() {
-		return this.token;
+		return token;
 	}
 }

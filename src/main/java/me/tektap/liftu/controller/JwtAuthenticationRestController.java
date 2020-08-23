@@ -6,7 +6,6 @@ import me.tektap.liftu.util.JwtTokenUtil;
 import me.tektap.liftu.exception.AuthenticationException;
 import me.tektap.liftu.Request.JwtTokenRequest;
 import me.tektap.liftu.Response.JwtTokenResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,9 +51,9 @@ public class JwtAuthenticationRestController {
 
 			final String token = jwtTokenUtil.generateToken(userDetails);
 
-			return ResponseEntity.ok(new JwtTokenResponse(token));
+			return ResponseEntity.ok(new JwtTokenResponse(JwtTokenResponse.SUCCESS, token));
 		} catch (Exception e) {
-			return ResponseEntity.badRequest().body("Login failed");
+			return ResponseEntity.badRequest().body(new JwtTokenResponse(JwtTokenResponse.FAILED, null));
 		}
 	}
 
@@ -67,9 +66,9 @@ public class JwtAuthenticationRestController {
 
 		if (jwtTokenUtil.canTokenBeRefreshed(token)) {
 			String refreshedToken = jwtTokenUtil.refreshToken(token);
-			return ResponseEntity.ok(new JwtTokenResponse(refreshedToken));
+			return ResponseEntity.ok(new JwtTokenResponse(JwtTokenResponse.SUCCESS, refreshedToken));
 		} else {
-			return ResponseEntity.badRequest().body(null);
+			return ResponseEntity.badRequest().body(new JwtTokenResponse(JwtTokenResponse.FAILED, null));
 		}
 	}
 

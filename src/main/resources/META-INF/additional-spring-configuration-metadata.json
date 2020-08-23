@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "site.crossorigin",
+      "type": "java.lang.String",
+      "description": "Description for site.crossorigin."
+  }
+] }
