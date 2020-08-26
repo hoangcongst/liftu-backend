@@ -14,9 +14,9 @@ import java.util.Date;
 @EntityListeners(AuditingEntityListener.class)
 @Data
 public class Post {
-    private static final int PUBLISH = 0;
-    private static final int DRAFT = 1;
-    private static final int PRIVATE = 2;
+    public static final int PUBLISH = 0;
+    public static final int DRAFT = 1;
+    public static final int PRIVATE = 2;
 
     public Post(String title, String alias, String content, byte status) {
         this.title = title;

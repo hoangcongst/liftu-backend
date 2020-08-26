@@ -3,6 +3,8 @@ package me.tektap.liftu.service;
 import me.tektap.liftu.Request.PostRequest;
 import me.tektap.liftu.dao.PostRepository;
 import me.tektap.liftu.entity.Post;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,5 +19,9 @@ public class PostService {
         Post mPost = new Post(postRequest.getTitle(), postRequest.getAlias(),
                 postRequest.getContent(), postRequest.getStatus());
         return this.mPostRepository.savePost(mPost);
+    }
+
+    public Page<Post> index(Pageable pageable) {
+        return this.mPostRepository.findByStatus(Post.PUBLISH, pageable);
     }
 }
