@@ -1,6 +1,8 @@
-package me.tektap.liftu.entity;
+package me.tektap.liftu.entity.Post;
 
 import lombok.Data;
+import me.tektap.liftu.entity.User;
+import me.tektap.liftu.util.VnCharacterUtils;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -14,13 +16,14 @@ import java.util.Date;
 @EntityListeners(AuditingEntityListener.class)
 @Data
 public class Post {
-    public static final int PUBLISH = 0;
-    public static final int DRAFT = 1;
-    public static final int PRIVATE = 2;
+    public static final byte PUBLISH = 0;
+    public static final byte DRAFT = 1;
+    public static final byte PRIVATE = 2;
 
-    public Post(String title, String alias, String content, byte status) {
+    public Post(String title, String description, String content, byte status) {
         this.title = title;
-        this.alias = alias;
+        this.description = description;
+        this.alias = VnCharacterUtils.removeAccent(title).replaceAll("\\s+", "-");;
         this.content = content;
         this.status = status;
     }

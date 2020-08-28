@@ -1,7 +1,7 @@
 package me.tektap.liftu.Response;
 
 import lombok.Getter;
-import me.tektap.liftu.entity.Post;
+import me.tektap.liftu.entity.Post.Post;
 
 public class PostCreateResponse extends BaseResponse {
 

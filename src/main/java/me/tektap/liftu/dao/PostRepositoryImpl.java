@@ -1,7 +1,6 @@
 package me.tektap.liftu.dao;
 
-import me.tektap.liftu.entity.Post;
-import me.tektap.liftu.entity.User;
+import me.tektap.liftu.entity.Post.Post;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
