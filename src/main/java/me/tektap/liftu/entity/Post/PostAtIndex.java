@@ -3,6 +3,7 @@ package me.tektap.liftu.entity.Post;
 import org.springframework.beans.factory.annotation.Value;
 
 public interface PostAtIndex {
+    String getId();
     String getTitle();
     String getAlias();
     String getDescription();
