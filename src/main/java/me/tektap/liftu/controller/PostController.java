@@ -29,6 +29,6 @@ public class PostController {
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody PostRequest postRequest) {
         Post result = this.mPostService.create(postRequest);
-        return ResponseEntity.ok(new PostCreateResponse(PostCreateResponse.SUCCESS, null));
+        return ResponseEntity.ok(new PostCreateResponse(PostCreateResponse.SUCCESS, result));
     }
 }

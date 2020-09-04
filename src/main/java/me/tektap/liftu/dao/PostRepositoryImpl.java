@@ -8,16 +8,13 @@ import javax.persistence.EntityManager;
 
 @Repository
 public class PostRepositoryImpl implements PostRepositoryCustom {
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     public PostRepositoryImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
-    @Override
-    @Transactional
-    public Post savePost(Post mPost) {
-        entityManager.persist(mPost);
-        return mPost;
+    public Post show(long postId) {
+        return entityManager.find(Post.class, postId);
     }
 }

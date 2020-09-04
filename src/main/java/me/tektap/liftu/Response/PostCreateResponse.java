@@ -6,10 +6,10 @@ import me.tektap.liftu.entity.Post.Post;
 public class PostCreateResponse extends BaseResponse {
 
     @Getter
-    private Post mPost;
+    private final Post data;
 
     public PostCreateResponse(int status, Post mPost) {
         super(status);
-        this.mPost = mPost;
+        this.data = mPost;
     }
 }
