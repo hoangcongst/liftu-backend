@@ -95,7 +95,7 @@ public class JwtTokenUtil implements Serializable {
 		return (username.equals(user.getUsername()) && !isTokenExpired(token));
 	}
 
-	private Date calculateExpirationDate(Date createdDate) {
+	public Date calculateExpirationDate(Date createdDate) {
 		return new Date(createdDate.getTime() + expiration * 1000);
 	}
 }
