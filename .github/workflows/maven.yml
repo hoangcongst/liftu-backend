@@ -24,11 +24,11 @@ jobs:
       run: mvn -B package --file pom.xml
     
     - name: Deploy production
-        if: github.ref == 'refs/heads/master'
-        uses: garygrossgarten/github-action-scp@release
-        with:
-          local: build
-          remote: ${{ secrets.HOME_PATH }}
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.PASSWORD }}
+      if: github.ref == 'refs/heads/master'
+      uses: garygrossgarten/github-action-scp@release
+      with:
+        local: build
+        remote: ${{ secrets.HOME_PATH }}
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.SSH_USER }}
+        password: ${{ secrets.PASSWORD }}
