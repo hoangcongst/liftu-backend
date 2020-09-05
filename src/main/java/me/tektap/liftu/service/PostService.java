@@ -26,8 +26,4 @@ public class PostService {
     public Page<PostAtIndex> index(Pageable pageable) {
         return this.mPostRepository.findAllByStatus(Post.PUBLISH, PostAtIndex.class, pageable);
     }
-
-    public Post show(long id) {
-        return this.mPostRepository.findById(id);
-    }
 }

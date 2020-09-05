@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.Objects;
 
 @RestController
@@ -49,10 +50,10 @@ public class JwtAuthenticationRestController {
 					.findUserByUsername(authenticationRequest.getUsername());
 
 			final String token = jwtTokenUtil.generateToken(userDetails);
-
-			return ResponseEntity.ok(new JwtTokenResponse(JwtTokenResponse.SUCCESS, token));
+			Date exprired = jwtTokenUtil.getExpirationDateFromToken(token);
+			return ResponseEntity.ok(new JwtTokenResponse(JwtTokenResponse.SUCCESS, token, exprired, userDetails));
 		} catch (Exception e) {
-			return ResponseEntity.badRequest().body(new JwtTokenResponse(JwtTokenResponse.FAILED, null));
+			return ResponseEntity.badRequest().body(new JwtTokenResponse(JwtTokenResponse.FAILED, null, null, null));
 		}
 	}
 
@@ -65,9 +66,9 @@ public class JwtAuthenticationRestController {
 
 		if (jwtTokenUtil.canTokenBeRefreshed(token)) {
 			String refreshedToken = jwtTokenUtil.refreshToken(token);
-			return ResponseEntity.ok(new JwtTokenResponse(JwtTokenResponse.SUCCESS, refreshedToken));
+			return ResponseEntity.ok(new JwtTokenResponse(JwtTokenResponse.SUCCESS, refreshedToken, jwtTokenUtil.getExpirationDateFromToken(refreshedToken), user));
 		} else {
-			return ResponseEntity.badRequest().body(new JwtTokenResponse(JwtTokenResponse.FAILED, null));
+			return ResponseEntity.badRequest().body(new JwtTokenResponse(JwtTokenResponse.FAILED, null, null, null));
 		}
 	}
 
