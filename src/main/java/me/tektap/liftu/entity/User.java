@@ -19,8 +19,8 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
-    @JsonIgnore
     private long id;
+    @JsonIgnore
     @Column(name="username")
     private String username;
     @Column(name="display_name")
