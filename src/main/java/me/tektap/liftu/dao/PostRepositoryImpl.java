@@ -14,7 +14,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
         this.entityManager = entityManager;
     }
 
-    public Post show(long postId) {
+    public Post update(long postId) {
         return entityManager.find(Post.class, postId);
     }
 }

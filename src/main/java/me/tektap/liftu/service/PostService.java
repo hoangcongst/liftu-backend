@@ -7,7 +7,8 @@ import me.tektap.liftu.entity.Post.PostAtIndex;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Optional;
 
 @Service
 public class PostService {
@@ -27,7 +28,15 @@ public class PostService {
         return this.mPostRepository.findAllByStatus(Post.PUBLISH, PostAtIndex.class, pageable);
     }
 
-    public Post show(long id) {
+    public Optional<Post> show(long id) {
         return this.mPostRepository.findById(id);
+    }
+
+    public Post update(Post originalPost, PostRequest mPostRequest) {
+        originalPost.setContent(mPostRequest.getContent());
+        originalPost.setDescription(mPostRequest.getDescription());
+        originalPost.setTitle(mPostRequest.getTitle());
+        originalPost.setStatus(mPostRequest.getStatus());
+        return this.mPostRepository.save(originalPost);
     }
 }

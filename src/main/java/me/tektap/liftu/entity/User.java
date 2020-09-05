@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name="users")
@@ -24,6 +23,8 @@ public class User implements UserDetails {
     private long id;
     @Column(name="username")
     private String username;
+    @Column(name="display_name")
+    private String display_name;
     @Column(name="email")
     @JsonIgnore
     private String email;

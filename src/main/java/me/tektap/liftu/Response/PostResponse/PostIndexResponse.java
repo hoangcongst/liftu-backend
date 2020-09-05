@@ -1,6 +1,7 @@
-package me.tektap.liftu.Response;
+package me.tektap.liftu.Response.PostResponse;
 
 import lombok.Getter;
+import me.tektap.liftu.Response.BaseResponse;
 import me.tektap.liftu.entity.Post.Post;
 import me.tektap.liftu.entity.Post.PostAtIndex;
 import org.springframework.data.domain.Page;

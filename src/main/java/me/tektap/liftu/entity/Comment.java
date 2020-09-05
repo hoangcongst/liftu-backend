@@ -9,18 +9,21 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="comments")
 @EntityListeners(AuditingEntityListener.class)
 @Data
 public class Comment {
-    public Comment(String title, String description, String content, byte status) {
-        this.title = title;
-        this.description = description;
-        this.alias = VnCharacterUtils.removeAccent(title).replaceAll("\\s+", "-");;
+    public static final byte VISIBLE = 0;
+    public static final byte HIDDEN = 1;
+
+    public Comment(long postId, String content, long parentCommentId) {
+        this.postId = postId;
         this.content = content;
-        this.status = status;
+        this.parentCommentId = parentCommentId;
+        this.status = Comment.VISIBLE;
     }
 
     public Comment() {}
@@ -29,16 +32,12 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private long id;
-    @Column(name="title")
-    private String title;
-    @Column(name="alias")
-    private String alias;
+    @Column(name="post_id")
+    private long postId;
     @Column(name="content")
     private String content;
-    @Column(name="description")
-    private String description;
-    @Column(name="thumbnail")
-    private String thumbnail;
+    @Column(name="parent_comment_id")
+    private long parentCommentId;
     @Column(name="status")
     private byte status;
 
@@ -50,7 +49,11 @@ public class Comment {
     @LastModifiedDate
     private Date updated_at;
 
-    @ManyToOne
+    @OneToMany
+    @JoinColumn(name="parent_comment_id")
+    private List<Comment> comments;
+
+    @OneToOne
     @JoinColumn(name="user_id")
     @CreatedBy
     private User user;
