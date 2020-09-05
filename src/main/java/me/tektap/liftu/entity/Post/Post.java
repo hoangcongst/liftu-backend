@@ -1,8 +1,13 @@
 package me.tektap.liftu.entity.Post;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import me.tektap.liftu.entity.Comment;
 import me.tektap.liftu.entity.User;
 import me.tektap.liftu.util.VnCharacterUtils;
+import org.hibernate.annotations.Formula;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -10,6 +15,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="posts")
@@ -46,7 +52,8 @@ public class Post {
     private String thumbnail;
     @Column(name="status")
     private byte status;
-
+    @Column(name="number_comment")
+    private int numberComment;
     @Column(name="created_at", nullable = false, updatable = false)
     @CreatedDate
     private Date created_at;
