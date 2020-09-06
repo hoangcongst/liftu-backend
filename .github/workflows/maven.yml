@@ -27,10 +27,14 @@ jobs:
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
 
+    - name: copy file
+      uses: canastro/copy-file-action@master
+      with:
+        source: "src/main/resources/application.properties.example"
+        target: "src/main/resoureces/application.properties"
+
     - name: Build with Maven
-      run:
-        copy src/main/resources/application.properties.example src/main/resoureces/application.properties
-        mvn -B package --file pom.xml
+      run: mvn -B package --file pom.xml
     
     - name: Deploy production
       if: github.ref == 'refs/heads/master'
