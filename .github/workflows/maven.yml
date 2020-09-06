@@ -34,7 +34,7 @@ jobs:
         target: "src/main/resources/application.properties"
 
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -B package -Djwt.secret=${{ secrets.PROD_JWT_SECRET }} -Dmysql.host={{ secrets.PROD_HOST_MYSQL }} --file pom.xml
 
     - name: copy file
       uses: canastro/copy-file-action@master

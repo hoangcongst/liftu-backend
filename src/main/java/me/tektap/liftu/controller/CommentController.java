@@ -36,7 +36,7 @@ public class CommentController {
     @RequestMapping(method = RequestMethod.GET, value = "")
     public @ResponseBody
     ResponseEntity<?> index(@RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
-                            @RequestParam(name = "size", required = false, defaultValue = "15") Integer size,
+                            @RequestParam(name = "size", required = false, defaultValue = "5") Integer size,
                             @RequestParam(name = "post_id") Integer postId,
                             @RequestParam(name = "parent_comment_id", required = false, defaultValue = "0") Integer parentCommentId) {
         Pageable pageable = PageRequest.of(page, size);

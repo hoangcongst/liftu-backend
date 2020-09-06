@@ -25,6 +25,8 @@ public class User implements UserDetails {
     private String username;
     @Column(name="display_name")
     private String display_name;
+    @Column(name="avatar")
+    private String avatar;
     @Column(name="email")
     @JsonIgnore
     private String email;

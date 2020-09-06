@@ -10,5 +10,5 @@ import org.springframework.data.rest.core.annotation.RestResource;
 @RepositoryRestResource
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     @RestResource(path="index")
-    Page<Comment> findAllByPostIdAndStatusAndParentCommentId(long postId, byte status, long parentCommentId, Pageable pageable);
+    Page<Comment> findAllByPostIdAndStatusAndParentCommentIdOrderByIdDesc(long postId, byte status, long parentCommentId, Pageable pageable);
 }

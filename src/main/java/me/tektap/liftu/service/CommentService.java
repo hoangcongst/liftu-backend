@@ -48,7 +48,7 @@ public class CommentService {
     }
 
     public Page<Comment> index(long postId, long parentCommentId, Pageable pageable) {
-        return this.commentRepository.findAllByPostIdAndStatusAndParentCommentId(postId, Comment.VISIBLE, parentCommentId, pageable);
+        return this.commentRepository.findAllByPostIdAndStatusAndParentCommentIdOrderByIdDesc(postId, Comment.VISIBLE, parentCommentId, pageable);
     }
 
     public Comment update(long commentId, long userId, String content) {
