@@ -31,7 +31,7 @@ jobs:
       uses: canastro/copy-file-action@master
       with:
         source: "src/main/resources/application.properties.example"
-        target: "src/main/resoureces/application.properties"
+        target: "src/main/resources/application.properties"
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml
