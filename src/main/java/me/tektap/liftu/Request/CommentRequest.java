@@ -1,5 +1,6 @@
 package me.tektap.liftu.Request;
 
+import com.sun.istack.NotNull;
 import lombok.Data;
 import me.tektap.liftu.entity.Comment;
 
@@ -12,6 +13,7 @@ public class CommentRequest implements Serializable {
 
 	private long post_id;
 	private long parent_comment_id;
+	@NotNull
 	private String content;
 
 	public CommentRequest(long postId, String content, long parentCommentId) {

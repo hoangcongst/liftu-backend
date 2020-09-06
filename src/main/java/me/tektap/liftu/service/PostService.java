@@ -20,7 +20,7 @@ public class PostService {
 
     public Post create(PostRequest postRequest) {
         Post mPost = new Post(postRequest.getTitle(), postRequest.getDescription(),
-                postRequest.getContent(), postRequest.getStatus());
+                postRequest.getContent(), postRequest.getThumbnail(), postRequest.getStatus());
         return this.mPostRepository.save(mPost);
     }
 
@@ -36,6 +36,7 @@ public class PostService {
         originalPost.setContent(mPostRequest.getContent());
         originalPost.setDescription(mPostRequest.getDescription());
         originalPost.setTitle(mPostRequest.getTitle());
+        originalPost.setThumbnail(mPostRequest.getThumbnail());
         originalPost.setStatus(mPostRequest.getStatus());
         return this.mPostRepository.save(originalPost);
     }

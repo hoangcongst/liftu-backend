@@ -26,10 +26,14 @@ public class Post {
     public static final byte DRAFT = 1;
     public static final byte PRIVATE = 2;
 
-    public Post(String title, String description, String content, byte status) {
+    public Post(String title, String description, String content, String thumbnail, byte status) {
         this.title = title;
         this.description = description;
-        this.alias = VnCharacterUtils.removeAccent(title).replaceAll("\\s+", "-");;
+        this.thumbnail = thumbnail;
+        this.alias = VnCharacterUtils.removeAccent(title)
+                .replace("-", " ")
+                .replaceAll("\\s+", "-")
+                .replaceAll("[^A-Z,a-z,+d,-]", "");
         this.content = content;
         this.status = status;
     }
