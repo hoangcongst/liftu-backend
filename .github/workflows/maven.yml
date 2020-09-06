@@ -35,12 +35,18 @@ jobs:
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-    
+
+    - name: copy file
+        uses: canastro/copy-file-action@master
+        with:
+          source: "target/liftu-0.0.1-SNAPSHOT.war"
+          target: "target/liftu.war"
+
     - name: Deploy production
       if: github.ref == 'refs/heads/master'
       uses: garygrossgarten/github-action-scp@release
       with:
-        local: build
+        local: target/liftu.war
         remote: ${{ secrets.HOME_PATH }}
         host: ${{ secrets.HOST }}
         username: ${{ secrets.SSH_USER }}
