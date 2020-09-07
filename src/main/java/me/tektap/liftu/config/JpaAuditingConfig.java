@@ -14,6 +14,10 @@ import java.util.Optional;
 public class JpaAuditingConfig {
     @Bean
     public AuditorAware<User> auditorProvider() {
-        return () -> Optional.of((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        return () -> {
+            if (SecurityContextHolder.getContext().getAuthentication() != null)
+                return Optional.of((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+            else return Optional.empty();
+        };
     }
 }

@@ -8,6 +8,7 @@ import me.tektap.liftu.entity.User;
 import me.tektap.liftu.service.PostService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -18,7 +19,7 @@ import javax.validation.Valid;
 import java.util.Optional;
 
 @Validated
-@RestController
+@RepositoryRestController
 @RequestMapping("/posts")
 public class PostController {
     private final PostService mPostService;
@@ -34,7 +35,7 @@ public class PostController {
         return ResponseEntity.ok(new PostIndexResponse(PostResponse.SUCCESS, this.mPostService.index(pageable)));
     }
 
-    @RequestMapping(value="{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public ResponseEntity<?> show(@PathVariable("id") long id) {
         Optional<Post> result = this.mPostService.show(id);
         return result.map(post -> ResponseEntity.ok(new PostResponse(PostResponse.SUCCESS, post)))
@@ -42,16 +43,17 @@ public class PostController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<?> create(@Valid @RequestBody PostRequest postRequest) {
+    public ResponseEntity<?> create(@RequestBody @Valid PostRequest postRequest) {
         Post result = this.mPostService.create(postRequest);
         return ResponseEntity.ok(new PostResponse(PostResponse.SUCCESS, result));
     }
 
     @RequestMapping(value = "{post_id}", method = RequestMethod.PUT)
-    public ResponseEntity<?> update(@PathVariable("post_id") long postId, @Valid @RequestBody PostRequest postRequest, Authentication authentication) {
+    public ResponseEntity<?> update(@PathVariable("post_id") long postId,
+                                    @RequestBody @Valid PostRequest postRequest, Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         Optional<Post> result = this.mPostService.show(postId);
-        if(result.isPresent() && user.getId() == result.get().getUser().getId()) {
+        if (result.isPresent() && user.getId() == result.get().getUser().getId()) {
             Post mPost = this.mPostService.update(result.get(), postRequest);
             return ResponseEntity.ok(new PostResponse(PostResponse.SUCCESS, mPost));
         } else return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new PostResponse(PostResponse.FAILED, null));
