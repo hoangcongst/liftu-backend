@@ -11,10 +11,6 @@ public class CommentResponse extends BaseResponse {
     @Getter
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private final Comment data;
-    @Getter
-    @Setter
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private String message = null;
 
     public CommentResponse(int status, Comment comment) {
         super(status);

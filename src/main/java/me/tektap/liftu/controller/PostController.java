@@ -11,10 +11,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
+@Validated
 @RestController
 @RequestMapping("/posts")
 public class PostController {
@@ -39,13 +42,13 @@ public class PostController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<?> create(@RequestBody PostRequest postRequest) {
+    public ResponseEntity<?> create(@Valid @RequestBody PostRequest postRequest) {
         Post result = this.mPostService.create(postRequest);
         return ResponseEntity.ok(new PostResponse(PostResponse.SUCCESS, result));
     }
 
     @RequestMapping(value = "{post_id}", method = RequestMethod.PUT)
-    public ResponseEntity<?> update(@PathVariable("post_id") long postId, @RequestBody PostRequest postRequest, Authentication authentication) {
+    public ResponseEntity<?> update(@PathVariable("post_id") long postId, @Valid @RequestBody PostRequest postRequest, Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         Optional<Post> result = this.mPostService.show(postId);
         if(result.isPresent() && user.getId() == result.get().getUser().getId()) {

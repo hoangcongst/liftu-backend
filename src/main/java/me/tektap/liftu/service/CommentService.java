@@ -1,6 +1,6 @@
 package me.tektap.liftu.service;
 
-import me.tektap.liftu.Request.CommentRequest;
+import me.tektap.liftu.Request.CommentCreateRequest;
 import me.tektap.liftu.dao.CommentRepository;
 import me.tektap.liftu.dao.PostRepository;
 import me.tektap.liftu.entity.Comment;
@@ -22,7 +22,7 @@ public class CommentService {
         this.postRepository = postRepository;
     }
 
-    public Comment create(CommentRequest commentRequest) {
+    public Comment create(CommentCreateRequest commentRequest) {
         Comment comment = new Comment(commentRequest.getPost_id(), commentRequest.getContent(), commentRequest.getParent_comment_id());
         this.changeNumberParentComment(comment.getParentCommentId(), 1);
         this.changeNumberCommentOfPost(comment.getPostId(), 1);

@@ -44,7 +44,7 @@ public class AmazonClient {
                 .withCredentials(new AWSStaticCredentialsProvider(credentials)).build();
     }
 
-    public String uploadFile(MultipartFile multipartFile) {
+    public String uploadFile(@ValidImage MultipartFile multipartFile) {
         String fileUrl = "";
         try {
             File file = convertMultiPartToFile(multipartFile);

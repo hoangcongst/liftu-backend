@@ -1,6 +1,6 @@
 package me.tektap.liftu.controller;
 
-import me.tektap.liftu.Request.CommentRequest;
+import me.tektap.liftu.Request.CommentCreateRequest;
 import me.tektap.liftu.Request.CommentUpdateRequest;
 import me.tektap.liftu.Response.CommentResponse;
 import me.tektap.liftu.Response.PostResponse.PostResponse;
@@ -15,9 +15,12 @@ import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 
+@Validated
 @RepositoryRestController
 @RequestMapping("/comments")
 public class CommentController {
@@ -28,7 +31,7 @@ public class CommentController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<?> create(@RequestBody CommentRequest commentRequest) {
+    public ResponseEntity<?> create(@RequestBody @Valid CommentCreateRequest commentRequest) {
         Comment result = this.commentService.create(commentRequest);
         return ResponseEntity.ok(new CommentResponse(PostResponse.SUCCESS, result));
     }
@@ -60,7 +63,7 @@ public class CommentController {
 
     @RequestMapping(value = "{comment_id}", method = RequestMethod.PUT)
     ResponseEntity<?> update(@PathVariable("comment_id") long commentId,
-                             @RequestBody CommentUpdateRequest commentUpdateRequest,
+                             @RequestBody @Valid CommentUpdateRequest commentUpdateRequest,
                              Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         try {
