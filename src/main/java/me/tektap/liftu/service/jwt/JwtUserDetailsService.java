@@ -3,6 +3,7 @@ package me.tektap.liftu.service.jwt;
 import me.tektap.liftu.Request.UserCreateRequest;
 import me.tektap.liftu.dao.UserRepository;
 import me.tektap.liftu.entity.User;
+import me.tektap.liftu.service.AmazonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,16 +11,17 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.sql.SQLIntegrityConstraintViolationException;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService, UserService {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	private final UserRepository mUserRepository;
-	public JwtUserDetailsService(UserRepository mUserRepository) {
+	private final AmazonClient amazonClient;
+	public JwtUserDetailsService(UserRepository mUserRepository, AmazonClient amazonClient) {
 		this.mUserRepository = mUserRepository;
+		this.amazonClient = amazonClient;
 	}
 
 	@Override
@@ -34,9 +36,11 @@ public class JwtUserDetailsService implements UserDetailsService, UserService {
 
 	public User create(UserCreateRequest userCreateRequest) {
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(BCryptPasswordEncoder.BCryptVersion.$2A);
-		User u = new User(userCreateRequest.getUsername(), userCreateRequest.getDisplay_name(),
-				userCreateRequest.getAvatar(), userCreateRequest.getEmail(),
+		User u = new User(userCreateRequest.getUsername(), userCreateRequest.getDisplay_name(),userCreateRequest.getEmail(),
 				bCryptPasswordEncoder.encode(userCreateRequest.getPassword()), User.ACTIVE);
-		return this.mUserRepository.save(u);
+		User savedUser = this.mUserRepository.save(u);
+		String avatarLink = this.amazonClient.uploadFile(userCreateRequest.getAvatar());
+		savedUser.setAvatar(avatarLink);
+		return this.mUserRepository.save(savedUser);
 	}
 }

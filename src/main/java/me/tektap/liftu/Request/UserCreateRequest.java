@@ -1,18 +1,15 @@
 package me.tektap.liftu.Request;
 
 import lombok.Data;
+import me.tektap.liftu.annotation.ValidImage;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.annotation.HttpConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 
 @Data
-public class UserCreateRequest implements Serializable {
-    private static final long serialVersionUID = -5616176897013108345L;
-
+public class UserCreateRequest {
     @NotNull
     @Size(min = 5, max = 20)
     private String username;
@@ -21,21 +18,21 @@ public class UserCreateRequest implements Serializable {
     @Email
     private String email;
     @NotNull
-    @Size(min = 10, max = 50)
+    @Size(min = 6, max = 50)
     private String display_name;
     @NotNull
     @Size(min = 8, max = 50)
     private String password;
-    @Size(max = 255)
-    @Pattern(regexp = "([a-z\\-_0-9\\/\\:\\.]*\\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF))", message = "Avatar must be image")
-    private String avatar;
     private byte status;
+    @NotNull
+    @ValidImage
+    private MultipartFile avatar;
 
-    public UserCreateRequest(String username, String email, String display_name, String password, String avatar) {
+    public UserCreateRequest(String username, String email, String display_name, String password, MultipartFile avatar) {
         this.username = username;
         this.email = email;
         this.display_name = display_name;
-        this.avatar = avatar;
         this.password = password;
+        this.avatar = avatar;
     }
 }

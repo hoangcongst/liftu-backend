@@ -7,8 +7,10 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import java.util.Collection;
 import java.util.Date;
 
@@ -16,6 +18,7 @@ import java.util.Date;
 @Table(name = "users")
 @EntityListeners(AuditingEntityListener.class)
 @Data
+@Validated
 public class User implements UserDetails {
     public static final byte ACTIVE = 0;
     public static final byte BANNED = 1;
@@ -25,13 +28,14 @@ public class User implements UserDetails {
     @Column(name = "id")
     private long id;
     @JsonIgnore
+    @Valid
     @Column(name = "username", unique = true)
     private String username;
-    @Column(name = "display_name", unique = true)
+    @Column(name = "display_name")
     private String display_name;
     @Column(name = "avatar")
     private String avatar;
-    @Column(name = "email", unique = true)
+    @Column(name = "email")
     @JsonIgnore
     private String email;
     @Column(name = "password")
@@ -54,16 +58,14 @@ public class User implements UserDetails {
     /**
      * @param username
      * @param display_name
-     * @param avatar
      * @param email
      * @param password
      * @param status
      */
-    public User(String username, String display_name, String avatar,
+    public User(String username, String display_name,
                 String email, String password, byte status) {
         this.username = username;
         this.display_name = display_name;
-        this.avatar = avatar;
         this.email = email;
         this.password = password;
         this.status = status;

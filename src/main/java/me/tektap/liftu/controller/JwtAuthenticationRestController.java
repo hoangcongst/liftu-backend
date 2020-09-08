@@ -2,6 +2,7 @@ package me.tektap.liftu.controller;
 
 import me.tektap.liftu.Request.UserCreateRequest;
 import me.tektap.liftu.Response.BaseResponse;
+import me.tektap.liftu.annotation.ValidImage;
 import me.tektap.liftu.dao.UserRepository;
 import me.tektap.liftu.entity.User;
 import me.tektap.liftu.service.jwt.UserService;
@@ -20,6 +21,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
@@ -85,7 +87,7 @@ public class JwtAuthenticationRestController {
     }
 
     @RequestMapping(value = "register", method = RequestMethod.POST)
-    public ResponseEntity<?> register(@RequestBody @Valid UserCreateRequest userCreateRequest) {
+    public ResponseEntity<?> register(@ModelAttribute @Valid UserCreateRequest userCreateRequest) {
         User user = this.userService.create(userCreateRequest);
         final String token = jwtTokenUtil.generateToken(user);
         Date exprired = jwtTokenUtil.getExpirationDateFromToken(token);

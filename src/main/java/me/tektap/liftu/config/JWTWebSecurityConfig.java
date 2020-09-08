@@ -25,8 +25,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -90,6 +88,6 @@ public class JWTWebSecurityConfig extends WebSecurityConfigurerAdapter {
         webSecurity.ignoring()
                 .antMatchers(HttpMethod.POST, "/auth/**")
                 .antMatchers(HttpMethod.OPTIONS, "/**")
-                .antMatchers(HttpMethod.GET, "/", "/posts"); // Other Stuff You want to Ignore
+                .antMatchers(HttpMethod.GET, "/", "/posts/**"); // Other Stuff You want to Ignore
     }
 }
