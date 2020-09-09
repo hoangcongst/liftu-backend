@@ -1,8 +1,6 @@
 package me.tektap.liftu.controller;
 
 import me.tektap.liftu.Request.UserCreateRequest;
-import me.tektap.liftu.Response.BaseResponse;
-import me.tektap.liftu.annotation.ValidImage;
 import me.tektap.liftu.dao.UserRepository;
 import me.tektap.liftu.entity.User;
 import me.tektap.liftu.service.jwt.UserService;
@@ -21,7 +19,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
@@ -64,8 +61,8 @@ public class JwtAuthenticationRestController {
                     .findUserByUsername(authenticationRequest.getUsername());
 
             final String token = jwtTokenUtil.generateToken(userDetails);
-            Date exprired = jwtTokenUtil.getExpirationDateFromToken(token);
-            return ResponseEntity.ok(new JwtTokenResponse(JwtTokenResponse.SUCCESS, token, exprired, userDetails));
+            Date expired = jwtTokenUtil.getExpirationDateFromToken(token);
+            return ResponseEntity.ok(new JwtTokenResponse(JwtTokenResponse.SUCCESS, token, expired, userDetails));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new JwtTokenResponse(JwtTokenResponse.FAILED, null, null, null));
         }
@@ -90,9 +87,9 @@ public class JwtAuthenticationRestController {
     public ResponseEntity<?> register(@ModelAttribute @Valid UserCreateRequest userCreateRequest) {
         User user = this.userService.create(userCreateRequest);
         final String token = jwtTokenUtil.generateToken(user);
-        Date exprired = jwtTokenUtil.getExpirationDateFromToken(token);
+        Date expired = jwtTokenUtil.getExpirationDateFromToken(token);
         return ResponseEntity.ok(new JwtTokenResponse(JwtTokenResponse.SUCCESS,
-                token, exprired, user));
+                token, expired, user));
     }
 
     @ExceptionHandler({AuthenticationException.class})

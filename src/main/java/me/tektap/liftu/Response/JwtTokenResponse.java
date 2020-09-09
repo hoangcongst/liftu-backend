@@ -11,12 +11,12 @@ public class JwtTokenResponse extends BaseResponse {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private final User user;
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private final Date exprired;
+    private final Date expired;
 
-    public JwtTokenResponse(int status, String token, Date exprired, User user) {
+    public JwtTokenResponse(int status, String token, Date expired, User user) {
         super(status);
         this.token = token;
-        this.exprired = exprired;
+        this.expired = expired;
         this.user = user;
     }
 
@@ -24,8 +24,8 @@ public class JwtTokenResponse extends BaseResponse {
         return token;
     }
 
-    public Date getExprired() {
-        return exprired;
+    public Date getExpired() {
+        return expired;
     }
 
     public User getUser() { return user; }

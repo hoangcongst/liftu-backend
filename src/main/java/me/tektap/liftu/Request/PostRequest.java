@@ -17,7 +17,7 @@ public class PostRequest implements Serializable {
     @Size(max = 255)
     private String description;
     @NotNull
-    @Size(min = 10, max = 5000)
+    @Size(min = 10, max = 65000)
     private String content;
     @NotNull
     @Size(max = 255)
