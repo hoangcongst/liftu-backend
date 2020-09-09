@@ -19,7 +19,7 @@ public class CommentCreateRequest implements Serializable {
 	@PositiveOrZero
 	private long parent_comment_id;
 	@NotNull
-	@Size(min = 5, max = 255)
+	@Size(min = 5, max = 65000)
 	private String content;
 
 	public CommentCreateRequest(long postId, String content, long parentCommentId) {

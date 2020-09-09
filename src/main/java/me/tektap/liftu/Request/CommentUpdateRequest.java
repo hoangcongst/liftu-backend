@@ -12,7 +12,7 @@ public class CommentUpdateRequest implements Serializable {
 	private static final long serialVersionUID = -5616176897013108345L;
 
 	@NotEmpty(message = "Comment content is required")
-	@Size(min = 5, max = 255)
+	@Size(min = 5, max = 65000)
 	private String content;
 
 	public CommentUpdateRequest(long comment_id, String content) {
