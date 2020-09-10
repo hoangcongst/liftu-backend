@@ -62,7 +62,9 @@ public class JwtAuthenticationRestController {
             Date expired = jwtTokenUtil.getExpirationDateFromToken(token);
             return ResponseEntity.ok(new JwtTokenResponse(JwtTokenResponse.SUCCESS, token, expired, userDetails));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new JwtTokenResponse(JwtTokenResponse.FAILED, null, null, null));
+            JwtTokenResponse res = new JwtTokenResponse(JwtTokenResponse.FAILED, null, null, null);
+            res.setMessage("Wrong account or password!");
+            return ResponseEntity.badRequest().body(res);
         }
     }
 
