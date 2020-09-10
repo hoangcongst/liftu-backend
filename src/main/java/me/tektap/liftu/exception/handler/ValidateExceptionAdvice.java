@@ -1,6 +1,7 @@
 package me.tektap.liftu.exception.handler;
 
 import me.tektap.liftu.Response.BaseResponse;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,10 +19,10 @@ public class ValidateExceptionAdvice extends ResponseEntityExceptionHandler {
         return ResponseEntity.badRequest().body(response);
     }
 
-    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-    public ResponseEntity<?> handleValidateException(SQLIntegrityConstraintViolationException exc) {
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<?> handleValidateException(DataIntegrityViolationException exc) {
         BaseResponse response = new BaseResponse(BaseResponse.FAILED);
-        response.setMessage(exc.getMessage());
+        response.setMessage(exc.getCause().getCause().getMessage());
         return ResponseEntity.badRequest().body(response);
     }
 }
