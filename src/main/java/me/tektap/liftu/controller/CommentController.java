@@ -5,7 +5,7 @@ import me.tektap.liftu.Request.CommentUpdateRequest;
 import me.tektap.liftu.Response.CommentResponse;
 import me.tektap.liftu.Response.PostResponse.PostResponse;
 import me.tektap.liftu.entity.Comment;
-import me.tektap.liftu.entity.User;
+import me.tektap.liftu.entity.User.User;
 import me.tektap.liftu.exception.AuthorizeException;
 import me.tektap.liftu.service.CommentService;
 import org.springframework.data.domain.Page;

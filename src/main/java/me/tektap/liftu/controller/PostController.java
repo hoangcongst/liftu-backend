@@ -4,7 +4,7 @@ import me.tektap.liftu.Request.PostRequest;
 import me.tektap.liftu.Response.PostResponse.PostResponse;
 import me.tektap.liftu.Response.PostResponse.PostIndexResponse;
 import me.tektap.liftu.entity.Post.Post;
-import me.tektap.liftu.entity.User;
+import me.tektap.liftu.entity.User.User;
 import me.tektap.liftu.service.PostService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

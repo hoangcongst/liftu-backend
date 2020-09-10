@@ -41,6 +41,13 @@ jobs:
           replace: ${{ secrets.PROD_JWT_SECRET }}
           include: "application.properties"
 
+      - name: Prepare applications properties folder images
+        uses: jacobtomlinson/gha-find-replace@master
+        with:
+          find: "s3bucketName=liftu-dev"
+          replace: "s3bucketName=liftu"
+          include: "application.properties"
+
       - name: Build with Maven
         run: mvn -B package --file pom.xml
 

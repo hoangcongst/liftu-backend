@@ -1,4 +1,4 @@
-package me.tektap.liftu.entity;
+package me.tektap.liftu.entity.User;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;

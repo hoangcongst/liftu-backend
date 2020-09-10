@@ -1,8 +1,7 @@
 package me.tektap.liftu.entity;
 
 import lombok.Data;
-import me.tektap.liftu.entity.Post.Post;
-import me.tektap.liftu.util.VnCharacterUtils;
+import me.tektap.liftu.entity.User.User;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -10,7 +9,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name="comments")

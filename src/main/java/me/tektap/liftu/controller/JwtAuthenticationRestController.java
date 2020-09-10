@@ -2,12 +2,13 @@ package me.tektap.liftu.controller;
 
 import me.tektap.liftu.Request.UserCreateRequest;
 import me.tektap.liftu.dao.UserRepository;
-import me.tektap.liftu.entity.User;
+import me.tektap.liftu.entity.User.User;
 import me.tektap.liftu.service.jwt.UserService;
 import me.tektap.liftu.util.JwtTokenUtil;
 import me.tektap.liftu.exception.AuthenticationException;
 import me.tektap.liftu.Request.JwtTokenRequest;
 import me.tektap.liftu.Response.JwtTokenResponse;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpStatus;
@@ -19,11 +20,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Date;
 import java.util.Objects;
 
@@ -42,8 +40,8 @@ public class JwtAuthenticationRestController {
     private final UserService userService;
 
     public JwtAuthenticationRestController(AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil,
-                                           UserDetailsService jwtUserDetailsService, UserRepository mUserRepository,
-                                           UserService userService) {
+                                           @Qualifier("jwtUserDetailsService") UserDetailsService jwtUserDetailsService, UserRepository mUserRepository,
+                                           @Qualifier("jwtUserDetailsService") UserService userService) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenUtil = jwtTokenUtil;
         this.jwtUserDetailsService = jwtUserDetailsService;

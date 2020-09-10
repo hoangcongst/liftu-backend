@@ -1,7 +1,7 @@
 package me.tektap.liftu.Response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import me.tektap.liftu.entity.User;
+import me.tektap.liftu.entity.User.User;
 
 import java.util.Date;
 

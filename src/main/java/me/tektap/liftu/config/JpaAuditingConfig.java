@@ -1,6 +1,6 @@
 package me.tektap.liftu.config;
 
-import me.tektap.liftu.entity.User;
+import me.tektap.liftu.entity.User.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;

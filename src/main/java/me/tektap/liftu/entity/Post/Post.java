@@ -1,13 +1,8 @@
 package me.tektap.liftu.entity.Post;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import me.tektap.liftu.entity.Comment;
-import me.tektap.liftu.entity.User;
+import me.tektap.liftu.entity.User.User;
 import me.tektap.liftu.util.VnCharacterUtils;
-import org.hibernate.annotations.Formula;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
