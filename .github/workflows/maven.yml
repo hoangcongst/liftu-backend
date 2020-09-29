@@ -38,14 +38,14 @@ jobs:
         uses: jacobtomlinson/gha-find-replace@master
         with:
           find: "spring.datasource.username=root"
-          replace: "spring.datasource.username="${{ secrets.PROD_USER_MYSQL }}
+          replace: ${{ secrets.PROD_USER_MYSQL }}
           include: "application.properties"
 
       - name: Prepare applications properties
         uses: jacobtomlinson/gha-find-replace@master
         with:
           find: "spring.datasource.password=root"
-          replace: "spring.datasource.password="${{ secrets.PROD_PASSWORD_MYSQL }}
+          replace: ${{ secrets.PROD_PASSWORD_MYSQL }}
           include: "application.properties"
 
       - name: Prepare applications properties jwt secret
