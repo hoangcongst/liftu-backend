@@ -3,6 +3,7 @@ package me.tektap.liftu.service;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
@@ -40,7 +41,8 @@ public class AmazonClient {
     @PostConstruct
     private void initializeAmazon() {
         AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
-        this.s3client = AmazonS3ClientBuilder.standard().withRegion(Regions.AP_SOUTHEAST_1)
+        this.s3client = AmazonS3ClientBuilder.standard()
+                .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(endpointUrl, Regions.US_WEST_2.getName()))
                 .withCredentials(new AWSStaticCredentialsProvider(credentials)).build();
     }
 
