@@ -59,7 +59,7 @@ jobs:
         uses: jacobtomlinson/gha-find-replace@master
         with:
           find: "s3bucketName=liftu-dev"
-          replace: "s3bucketName=liftu"
+          replace: "s3bucketName=liftu-image"
           include: "application.properties"
 
       - name: Build with Maven
