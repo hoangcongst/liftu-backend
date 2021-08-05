@@ -135,7 +135,7 @@
 								<fileset>
 									<directory>target</directory>
 									<excludes>
-										<exclude>*.war</exclude>
+										<exclude>liftu.jar</exclude>
 									</excludes>
 								</fileset>
 							</filesets>
