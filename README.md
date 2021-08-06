@@ -1,2 +1,2 @@
 # liftu-backend
-### Personal blog apis ###
+### Personal blog API ###
